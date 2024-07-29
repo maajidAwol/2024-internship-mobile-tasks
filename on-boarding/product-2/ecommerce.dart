@@ -48,11 +48,11 @@ class ProductManager {
   List<Product> AllProducts = [];
 
   void addProduct() {
-    print("Enter Name: ");
+    print("Enter Product Name: ");
     String? Name = stdin.readLineSync();
-    print("Enter Description: ");
+    print("Enter Product Description: ");
     String? Description = stdin.readLineSync();
-    print("Enter Price: ");
+    print("Enter Product Price: ");
     double Price = double.parse(stdin.readLineSync() ?? '0');
 
     Product NewProduct = Product(Name, Description, Price);
@@ -64,9 +64,9 @@ class ProductManager {
     if (AllProducts.length == 0) {
       print("NO product Available");
     } else {
-      var i = 0;
+      var i = 1;
       for (var product in AllProducts) {
-        print("======Product${i}========");
+        print("======Product ${i} ========");
         print("Product Name: ${product.Name}");
         print("Product Description: ${product.Description}");
         print("Product Price: ${product.Price}");
@@ -124,6 +124,7 @@ class ProductManager {
       var i = 1;
       for (var product in AllProducts) {
         print("${i}: ${product.Name}");
+        i++;
       }
       int idx = int.parse(stdin.readLineSync() ?? '0') - 1;
       AllProducts.removeAt(idx);
