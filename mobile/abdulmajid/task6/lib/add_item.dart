@@ -7,8 +7,16 @@ class AddItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Add Product"),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: GoBack(),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Add Product",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -19,33 +27,51 @@ class AddItem extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: Colors.grey,
+                  color: Color.fromARGB(255, 243, 243, 243),
                 ),
-                height: 160,
+                height: 190,
                 width: double.infinity,
                 child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.image_outlined,
-                      size: 100,
+                      size: 48,
                     ),
-                    Text("Upload Image")
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "upload image",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
                   ],
                 ),
               ),
-              _textField("Name"),
+              SizedBox(
+                height: 10,
+              ),
+
+              TextFieldTitle(title: "name"),
               const SizedBox(
                 height: 10,
               ),
-              _textField("category"),
+
+              TextFieldTitle(title: "category"),
               const SizedBox(
                 height: 10,
               ),
-              _textField("Price"),
+              TextFieldTitle(title: "price", type: Icons.attach_money),
               const SizedBox(
                 height: 10,
               ),
-              _textField("description", 5),
+              TextFieldTitle(
+                title: "description",
+                lines: 5,
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -75,38 +101,8 @@ class AddItem extends StatelessWidget {
     );
   }
 
-  static _textField(String title, [int lines = 1]) {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-              color: Colors.grey,
-            ),
-            child: TextField(
-              maxLines: lines,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                // suffixIcon: Icon(Icons.pedal_bike),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // static _textField(String title, [int lines = 1, IconData? type = null]) {
+  //   return TextFieldTitle();
+  // }
 }
 

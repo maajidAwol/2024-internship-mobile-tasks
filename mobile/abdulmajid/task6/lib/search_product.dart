@@ -7,37 +7,43 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: GoBack(),
+        title: Text(
+          "Search Product",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      body: Container(
+        color: Colors.white,
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                
                 Expanded(
-                  child: OutlinedButton(
-                    style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)))),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Leather"),
-                        // Spacer(),
-                        // SizedBox(width: 20,),
-                        Icon(Icons.arrow_forward)
-                      ],
-                    ),
+                  child: TextFieldTitle(
+                    hint: "Leather",
+                    border: true,
+                    type: Icons.arrow_forward,
+                    typecolor: Color.fromARGB(255, 63, 81, 243),
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                Icon(Icons.filter_list)
+                ButtonIcon(
+                  icon: Icons.filter_list,
+                )
               ],
             ),
             SizedBox(
@@ -55,23 +61,37 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
             ),
-            _textField1("Category"),
+            SizedBox(
+              height: 20,
+            ),
+            TextFieldTitle(
+                title: "Category",
+                color: Colors.white,
+                border: true,
+                fontsize: 16),
             // ItemCard()
-
+            SizedBox(height: 15),
             Text(
               'Price',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
+
             RangeSlider(
-              values: RangeValues(2, 8),
+              activeColor: Colors.blue,
+              values: RangeValues(2, 9),
               max: 10,
               min: 1,
               onChanged: (RangeValues newValue) {},
             ),
-
-            BackgroundButton(title: "APPLY",),
+            SizedBox(
+              height: 25,
+            ),
+            BackgroundButton(
+              title: "APPLY",
+            ),
           ],
         ),
       ),
@@ -94,10 +114,11 @@ class SearchPage extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
-              color: Colors.grey,
+              color: Color.fromARGB(255, 246, 241, 241),
             ),
             child: TextField(
               maxLines: lines,
@@ -112,4 +133,3 @@ class SearchPage extends StatelessWidget {
     );
   }
 }
-
