@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:task6/models/products.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({
-    super.key,
-  });
+  ItemCard({super.key, required this.product});
+
+  Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -11,15 +12,26 @@ class ItemCard extends StatelessWidget {
       color: Colors.white,
       clipBehavior: Clip.antiAlias,
       child: GestureDetector(
-        onTap: () => {Navigator.pushNamed(context, '/detail')},
+        onTap: () => {
+          Navigator.pushNamed(
+            context,
+            '/detail',
+            arguments: product,
+          )
+        },
         child: Column(
           children: [
             AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.asset(
-                "assets/shoes.png",
-                fit: BoxFit.fitHeight,
-              ),
+              child: product.uploaded_image != null
+                  ? Image.file(
+                      fit: BoxFit.cover,
+                      product.uploaded_image!,
+                    )
+                  : Image.asset(
+                      product.Image,
+                      fit: BoxFit.fitHeight,
+                    ),
             ),
             Container(
               color: Colors.white,
@@ -29,7 +41,7 @@ class ItemCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Derby Leather Shoes",
+                        product.name,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -38,7 +50,7 @@ class ItemCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "\$120",
+                        "\$${product.price}",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -89,11 +101,10 @@ class ItemCard extends StatelessWidget {
 }
 
 class BackgroundButton extends StatelessWidget {
-  BackgroundButton({
-    required this.title,
-    super.key,
-  });
+  BackgroundButton({required this.title, super.key, this.callback});
   String title;
+
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +116,7 @@ class BackgroundButton extends StatelessWidget {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
         ),
-        onPressed: () {},
+        onPressed: callback,
         child: Text(
           title,
           style: TextStyle(
@@ -148,15 +159,24 @@ class DeleteButton extends StatelessWidget {
 }
 
 class ButtonIcon extends StatelessWidget {
-  ButtonIcon({super.key, required this.icon, this.color = Colors.white,this.background =Colors.blue,this.border = false});
+  ButtonIcon(
+      {super.key,
+      required this.icon,
+      this.color = Colors.white,
+      this.background = Colors.blue,
+      this.border = false,
+      this.callback,
+      required this.buildcontext});
   IconData icon;
   Color color;
   Color background;
   bool border;
+  BuildContext buildcontext;
+  final VoidCallback? callback;
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: callback,
       icon: Icon(icon),
       color: Colors.white,
       style: ButtonStyle(
@@ -198,7 +218,8 @@ class TextFieldTitle extends StatelessWidget {
       this.type = null,
       this.typecolor = Colors.black,
       this.hint = null,
-      this.color = const Color.fromARGB(255, 243, 243, 243)});
+      this.color = const Color.fromARGB(255, 243, 243, 243),
+      required this.controller});
 
   int lines = 1;
   IconData? type;
@@ -208,6 +229,7 @@ class TextFieldTitle extends StatelessWidget {
   bool border;
   double fontsize;
   Color typecolor;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -240,9 +262,13 @@ class TextFieldTitle extends StatelessWidget {
             ),
             child: TextField(
               maxLines: lines,
+              controller: controller,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                suffixIcon: Icon(type,color: typecolor,),
+                suffixIcon: Icon(
+                  type,
+                  color: typecolor,
+                ),
                 hintText: hint,
                 hintStyle: TextStyle(
                   fontSize: 20,

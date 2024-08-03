@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task6/models/products.dart';
 import 'package:task6/widgets.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -6,6 +7,30 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
+    final route = ModalRoute.of(context);
+
+    if (route == null || route.settings.arguments == null) {
+      // debugPrint("bbb");
+      return Scaffold(
+        body: Center(
+          child: Text("Product not Available"),
+        ),
+      );
+    }
+
+ final product = route.settings.arguments as Product;
+
+void update() {
+      Navigator.pushNamed(
+        context, "/update",
+        arguments: product
+        
+        );
+    }
+   
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -18,6 +43,7 @@ class DetailsPage extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 children: [
                   Container(
+                    // height: 200,
                     // clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       color: Colors.black,
@@ -25,8 +51,15 @@ class DetailsPage extends StatelessWidget {
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40)),
                     ),
-                    child: Image.asset(
-                      "assets/shoes2.jpeg",
+                    child: product.uploaded_image != null ? Image.file(
+                          fit: BoxFit.fitWidth,
+                          height: 250,
+                          width: double.infinity,
+
+                          
+                          product.uploaded_image!,
+                        ): Image.asset(
+                      product.image2,
                       // height: 200,
                       fit: BoxFit.fitHeight,
                     ),
@@ -60,7 +93,7 @@ class DetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Men's shoes",
+                          product.category,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
@@ -74,7 +107,7 @@ class DetailsPage extends StatelessWidget {
                               color: Colors.orange.shade300,
                             ),
                             Text(
-                              "(4.0)",
+                              "(${product.rating})",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
@@ -91,7 +124,7 @@ class DetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Derby Leather",
+                          "${product.name}",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -100,7 +133,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          "\$120",
+                          "\$${product.price}",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -145,7 +178,7 @@ class DetailsPage extends StatelessWidget {
                       height: 16,
                     ),
                     Text(
-                      "A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.",
+                      product.description,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -171,7 +204,7 @@ class DetailsPage extends StatelessWidget {
                           width: 50,
                         ),
                         Expanded(
-                          child: BackgroundButton(title: "UPDATE"),
+                          child: BackgroundButton(title: "UPDATE",callback:update                                                                                                                                                                                                             ),
                         )
                       ],
                     ),
