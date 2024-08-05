@@ -153,7 +153,7 @@ class Home extends StatelessWidget {
 
 
                       child: Consumer<ProductData>(
-      builder: (context, cart, child) {
+      builder: (context, productdata , child) {
         return ListView(
                         children: allCards,
                       );

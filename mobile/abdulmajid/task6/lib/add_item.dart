@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:task6/models/products.dart';
-import 'package:task6/widgets.dart';
+import 'models/products.dart';
+import 'widgets.dart';
 import 'dart:io';
 
 class AddItem extends StatefulWidget {
@@ -38,8 +38,8 @@ class _AddItemState extends State<AddItem> {
   Widget build(BuildContext context) {
     void addProduct() {
        
-      print(name_controller.text);
-      print(category_controller.text);
+      // print(name_controller.text);
+      // print(category_controller.text);
 
       Product newProduct = Product(
           id: ProductData.id,

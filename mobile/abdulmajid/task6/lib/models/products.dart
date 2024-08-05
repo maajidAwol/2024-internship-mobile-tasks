@@ -77,6 +77,7 @@ class ProductData extends ChangeNotifier {
 
   static List<Product> getAllData() {
     return allProduct;
+    
   }
 
   static void addProduct(Product product) {
