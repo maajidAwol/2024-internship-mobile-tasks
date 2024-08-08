@@ -8,6 +8,7 @@ class DeleteProduct {
   DeleteProduct(this.productRepository, this.id);
 
   Future<Either<Failure, void>> execute() {
+    
     return productRepository.deleteProduct(id);
   }
 }
