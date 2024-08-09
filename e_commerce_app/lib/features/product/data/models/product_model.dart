@@ -21,12 +21,16 @@ class ProductModel extends ProductEntity {
         price: (json["price"] as num?)?.toDouble() ?? 0.0,
       );
 
+  static List<ProductModel> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => ProductModel.fromJson(json)).toList();
+  }
+
   Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "description": description,
         "price": price,
-        "imageUrl": imageUrl
-            
+        "imageUrl": imageUrl,
+        "id":id
       };
+
 }

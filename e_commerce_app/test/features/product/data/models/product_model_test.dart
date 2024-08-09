@@ -23,7 +23,7 @@ void main() {
   test('success for valid from json', () async {
     final Map<String, dynamic> jsonMap = json.decode(
       readJson('helpers/dummy/dummy_product.json'),
-    );
+    )["data"][0];
 
     final result = ProductModel.fromJson(jsonMap);
 
