@@ -21,7 +21,7 @@ void main() {
   group("get all product api request test", () {
     test("get all product data success ", () async {
       when(mockHttpClient.get(Uri.parse(Urls.baseUrl))).thenAnswer((_) async =>
-          http.Response(readJson("helpers/dummy/dummy_product.json"), 200));
+          http.Response(readJson("helpers/dummy/dummy_product_list.json"), 200));
 
       //act
       final result = await productRemoteDataSource.getAllProduct();
