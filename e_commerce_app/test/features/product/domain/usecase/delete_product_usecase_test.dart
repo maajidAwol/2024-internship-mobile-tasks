@@ -27,7 +27,7 @@ void main() {
   Failure testFail = Failure("Erro occurred while deleting");
   test('trying to delete ', () async {
     when(mockProductRepository.deleteProduct(productEntity.id))
-        .thenAnswer((_) async => Right(testVal));
+        .thenAnswer((_) async => Right("Success"));
 
     final result = await mockProductRepository.deleteProduct(productEntity.id);
     expect(result, Right(testVal));

@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:e_commerce_app/core/constants/constants.dart';
 import 'package:e_commerce_app/core/failure/exception.dart';
-import 'package:e_commerce_app/features/product/data/data_sources/remote_data_source.dart';
+import 'package:e_commerce_app/features/product/data/data_sources/product_remote_data_source.dart';
 import 'package:e_commerce_app/features/product/data/models/product_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -21,7 +24,8 @@ void main() {
   group("get all product api request test", () {
     test("get all product data success ", () async {
       when(mockHttpClient.get(Uri.parse(Urls.baseUrl))).thenAnswer((_) async =>
-          http.Response(readJson("helpers/dummy/dummy_product_list.json"), 200));
+          http.Response(
+              readJson("helpers/dummy/dummy_product_list.json"), 200));
 
       //act
       final result = await productRemoteDataSource.getAllProduct();
@@ -73,30 +77,60 @@ void main() {
           "https://res.cloudinary.com/g5-mobile-track/image/upload/v1718777132/images/zxjhzrflkvsjutgbmr0f.jpg",
       name: "Anime website",
       price: 123);
+  ProductModel testNewProduct = ProductModel(
+      description: "Explore anime characters addj.",
+      id: "6672752cbd218790438efdb0",
+      imageUrl:
+          "D:/abd/A2SV/2024-internship-mobile-tasks/e_commerce_app/assets/download.jpeg",
+      name: "Anime website",
+      price: 123);
 
 // 3 add new roduct test case
   group("test case to insert new product ", () {
-    test("success to insert new product ", () async {
+      File image = File(testNewProduct.imageUrl);
       //assert
+      var imageBytes = image.readAsBytesSync();
+    test("success to insert new product ", () async {
+    
 
-      when(mockHttpClient.post(Uri.parse(Urls.baseUrl),
-              body: testModel.toJson()))
-          .thenAnswer((_) async =>
-              http.Response(readJson("helpers/dummy/dummy_product.json"), 201));
+      when(mockHttpClient.post(
+        Uri.parse(Urls.baseUrl),
+        headers: {"Content-Type": "multipart/form-data"},
+        body: {
+          "image": imageBytes,
+          "name": testNewProduct.name,
+          "description": testNewProduct.description,
+          "price": testNewProduct.price,
+
+        },
+        encoding: Encoding.getByName("utf-8")
+      )).thenAnswer((_) async =>
+          http.Response(readJson("helpers/dummy/dummy_product.json"), 201));
 
       //act
-      final result = await productRemoteDataSource.insertProduct(testModel);
+      final result =
+          await productRemoteDataSource.insertProduct(testNewProduct);
 //expect
       expect(result, isA<ProductModel>());
     });
     test("Failure to insert new product ", () async {
       //assert
-      when(mockHttpClient.post(Uri.parse(Urls.baseUrl),
-              body: testModel.toJson()))
+      when(mockHttpClient.post(
+        Uri.parse(Urls.baseUrl),
+        headers: {"Content-Type": "multipart/form-data"},
+        body: {
+          "image": imageBytes,
+          "name": testNewProduct.name,
+          "description": testNewProduct.description,
+          "price": testNewProduct.price,
+
+        },
+        encoding: Encoding.getByName("utf-8")
+      ))
           .thenAnswer((_) async => http.Response("not inserted", 404));
 
       //act
-      final result = productRemoteDataSource.insertProduct(testModel);
+      final result = productRemoteDataSource.insertProduct(testNewProduct);
 //expect
       expect(result, throwsA(isA<ServerException>()));
     });
@@ -118,21 +152,18 @@ void main() {
       expect(result, isA<ProductModel>());
     });
     test("Failure to update new product ", () async {
-       //assert
+      //assert
 
       when(mockHttpClient.put(Uri.parse(Urls.getProductById(testModel.id)),
               body: testModel.toJson()))
-          .thenAnswer((_) async =>
-              http.Response('product not updated', 404));
+          .thenAnswer((_) async => http.Response('product not updated', 404));
 
       //act
-      final result =  productRemoteDataSource.updateProduct(testModel);
+      final result = productRemoteDataSource.updateProduct(testModel);
 //expect
       expect(result, throwsA(isA<ServerException>()));
     });
   });
-
-
 
 // 5 add new roduct test case
   group("test case to delete new product ", () {
@@ -140,8 +171,7 @@ void main() {
       //assert
 
       when(mockHttpClient.delete(Uri.parse(Urls.getProductById(testModel.id))))
-          .thenAnswer((_) async =>
-              http.Response('deleted successfully', 200));
+          .thenAnswer((_) async => http.Response('deleted successfully', 200));
 
       //act
       final result = await productRemoteDataSource.deleteProduct(testModel.id);
@@ -149,34 +179,15 @@ void main() {
       expect(result, isA<String>());
     });
     test("Failure to delete new product ", () async {
-       //assert
+      //assert
 
-      when(mockHttpClient.delete(Uri.parse(Urls.getProductById
-      (testModel.id))))
-          .thenAnswer((_) async =>
-              http.Response('product not deleted', 404));
+      when(mockHttpClient.delete(Uri.parse(Urls.getProductById(testModel.id))))
+          .thenAnswer((_) async => http.Response('product not deleted', 404));
 
       //act
-      final result =  productRemoteDataSource.deleteProduct(testModel.id);
+      final result = productRemoteDataSource.deleteProduct(testModel.id);
 //expect
       expect(result, throwsA(isA<ServerException>()));
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

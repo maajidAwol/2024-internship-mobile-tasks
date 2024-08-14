@@ -28,7 +28,7 @@ void main() {
 
   test("success updating the product", () async {
     when(mockProductRepository.updateProduct(updatedProduct.id, updatedProduct))
-        .thenAnswer((_) async => Right(testVal));
+        .thenAnswer((_) async => Right(updatedProduct));
 
     final result = await updateProduct.execute();
     expect(result, Right(testVal));

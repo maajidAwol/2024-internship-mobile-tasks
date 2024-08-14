@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/product/data/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {
@@ -17,4 +18,10 @@ class ProductEntity extends Equatable {
   List<Object?> get props => [
     name,id,description,imageUrl,price,
   ];
+   ProductModel toModel() => ProductModel(
+      description: description,
+      id: id,
+      imageUrl: imageUrl,
+      name: name,
+      price: price);
 }

@@ -27,7 +27,7 @@ void main() {
 
   test("Success insert operation", () async {
     when(mockProductRepository.insertProduct(newProduct))
-        .thenAnswer((_) async => Right(testVal));
+        .thenAnswer((_) async => Right(newProduct));
 
     final result = await insertProduct.execute();
 

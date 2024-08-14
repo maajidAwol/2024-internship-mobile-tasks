@@ -5,7 +5,7 @@ import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
 abstract class ProductRepository {
   Future<Either<Failure, List<ProductEntity>>> getAllProduct();
   Future<Either<Failure, ProductEntity>> getOneProduct(String id);
-  Future<Either<Failure,void>> insertProduct(ProductEntity newProduct);
-  Future<Either<Failure,void>> deleteProduct(String id);
-  Future<Either<Failure,void>> updateProduct(String id, ProductEntity updatedProduct);
+  Future<Either<Failure,ProductEntity>> insertProduct(ProductEntity newProduct);
+  Future<Either<Failure,String>> deleteProduct(String id);
+  Future<Either<Failure,ProductEntity>> updateProduct(String id, ProductEntity updatedProduct);
 }

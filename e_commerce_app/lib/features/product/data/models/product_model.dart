@@ -30,7 +30,17 @@ class ProductModel extends ProductEntity {
         "description": description,
         "price": price,
         "imageUrl": imageUrl,
-        "id":id
+        "id": id
       };
 
+   ProductEntity toEntity() => ProductEntity(
+      description: description,
+      id: id,
+      imageUrl: imageUrl,
+      name: name,
+      price: price);
+  // static List<ProductEntity> toEntityList(List<dynamic> productModel){
+  //   return productModel.map((product) => product.)
+  // }
+ 
 }
