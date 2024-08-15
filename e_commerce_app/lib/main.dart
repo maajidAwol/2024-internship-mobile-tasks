@@ -26,7 +26,7 @@ class Root extends StatelessWidget {
           
         ),
         BlocProvider(
-          create: (context) => getIt<InsertProductBloc>()..add(ProductInsertedEvent()),
+          create: (context) => getIt<InsertProductBloc>(),
         ),
       ],
       child: MaterialApp(

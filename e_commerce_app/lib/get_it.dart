@@ -5,6 +5,7 @@ import 'package:e_commerce_app/features/product/data/repositories/product_reposi
 import 'package:e_commerce_app/features/product/domain/repositories/product_repository.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/get_all_product_usecase.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/get_one_product_usecase..dart';
+import 'package:e_commerce_app/features/product/domain/usecase/insert_product_usecase.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/insert_product/insert_product_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -27,6 +28,8 @@ Future<void> setup() async {
     ProductRepositoryImplimentation(productRemoteDataSource: getIt()),
   );
   getIt.registerSingleton<GetAllProductUsecase>(GetAllProductUsecase(getIt()));
+  getIt.registerSingleton<InsertProduct>(InsertProduct(getIt()));
+
   getIt.registerSingleton<HomeBloc>(
       HomeBloc(getAllProductUsecase: getIt()));
   getIt.registerSingleton<InsertProductBloc>(

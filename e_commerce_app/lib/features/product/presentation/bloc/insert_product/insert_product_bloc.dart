@@ -16,8 +16,10 @@ class InsertProductBloc extends Bloc<ProductInsertedEvent, InsertProductState> {
   }
 
   FutureOr<void> _onInserted(
-      ProductInserted event, Emitter<InsertProductState> emit) async{
-    final result =  await insertProductUsecase.execute(event.product);
+      ProductInserted event, Emitter<InsertProductState> emit) async {
+    final result = await insertProductUsecase.execute(event.product);
+    print('event');
+    print(event.product);
     emit(InsertedProductLoading());
   }
 }
