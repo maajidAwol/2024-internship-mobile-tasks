@@ -30,7 +30,6 @@ class ProductModel extends ProductEntity {
         "description": description,
         "price": price,
         "imageUrl": imageUrl,
-        "id": id
       };
 
    ProductEntity toEntity() => ProductEntity(

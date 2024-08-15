@@ -5,11 +5,11 @@ import 'package:e_commerce_app/features/product/domain/repositories/product_repo
 
 class InsertProduct {
   ProductRepository productRepository;
-  ProductEntity newProduct;
+  
 
-  InsertProduct(this.productRepository, this.newProduct);
+  InsertProduct(this.productRepository);
 
-  Future<Either<Failure, void>> execute() {
+  Future<Either<Failure, void>> execute(ProductEntity newProduct) {
     return productRepository.insertProduct(newProduct);
   }
 }
