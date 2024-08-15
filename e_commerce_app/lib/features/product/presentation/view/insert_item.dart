@@ -50,9 +50,12 @@ class _AddItemState extends State<AddItem> {
         description: description_controller.text,
         price: double.parse(price_controller.text),
       );
-      context.read<InsertProductBloc>().add(ProductInserted(product: newProduct));
+      
+      context
+          .read<InsertProductBloc>()
+          .add(ProductInserted(product: newProduct));
 
-      Navigator.pushNamed(context, '/home');
+      // Navigator.pushNamed(context, '/home');
     }
 
     return Scaffold(
@@ -67,109 +70,127 @@ class _AddItemState extends State<AddItem> {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: pickImage,
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Color.fromARGB(255, 243, 243, 243),
-                  ),
-                  height: 190,
-                  width: double.infinity,
-                  child: selectedImage != null
-                      ? Image.file(
-                          fit: BoxFit.cover,
-                          File(selectedImage!),
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.image_outlined,
-                              size: 48,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "upload image",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+      body: BlocBuilder<InsertProductBloc, InsertProductState>(
+          builder: (context, state) {
+        if (state is InsertProductInitial) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: pickImage,
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color.fromARGB(255, 243, 243, 243),
+                      ),
+                      height: 190,
+                      width: double.infinity,
+                      child: selectedImage != null
+                          ? Image.file(
+                              fit: BoxFit.cover,
+                              File(selectedImage!),
                             )
-                          ],
-                        ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 48,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "upload image",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
 
-              TextFieldTitle(
-                title: "name",
-                controller: name_controller,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+                  TextFieldTitle(
+                    title: "name",
+                    controller: name_controller,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
 
-              TextFieldTitle(
-                title: "category",
-                controller: category_controller,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFieldTitle(
-                title: "price",
-                type: Icons.attach_money,
-                controller: price_controller,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFieldTitle(
-                title: "description",
-                lines: 5,
-                controller: description_controller,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // SizedBox(
-              //   width: double.infinity,
-              //   child: ElevatedButton(
-              //     style: ButtonStyle(
-              //       backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  TextFieldTitle(
+                    title: "category",
+                    controller: category_controller,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFieldTitle(
+                    title: "price",
+                    type: Icons.attach_money,
+                    controller: price_controller,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFieldTitle(
+                    title: "description",
+                    lines: 5,
+                    controller: description_controller,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     style: ButtonStyle(
+                  //       backgroundColor: MaterialStateProperty.all(Colors.blue),
 
-              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //         RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(10)
-              //         )
-              //       ),
+                  //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //         RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(10)
+                  //         )
+                  //       ),
 
-              //     ),
-              //     onPressed: () {},
-              //     child: Text("ADD"),
-              //   ),
-              // ),
-              BackgroundButton(
-                title: "ADD",
-                callback: addProduct,
+                  //     ),
+                  //     onPressed: () {},
+                  //     child: Text("ADD"),
+                  //   ),
+                  // ),
+                  BackgroundButton(
+                    title: "ADD",
+                    callback: addProduct,
+                  ),
+                  DeleteButton(title: "REMOVE"),
+                ],
               ),
-              DeleteButton(title: "REMOVE"),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else if (state is InsertedProductLoading) {
+          return CircularProgressIndicator();
+        }
+         else if (state is InsertedProductFail) {
+          return Text("failed");
+        }
+         else if (state is InsertedProductSuccess) {
+          return Text("added");
+        }
+        
+        
+         else {
+          return Text("failed");
+        }
+      }),
     );
   }
 }

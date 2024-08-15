@@ -77,8 +77,9 @@ class ProductRemoteDataSource extends ProductDataSource {
       // print("image doesnt exist");
       throw ServerException();
     } else {
-      // print("image found");
+      print("image found");
     }
+      print("image found");
 
     var request = http.MultipartRequest(
         'POST',
@@ -93,8 +94,8 @@ class ProductRemoteDataSource extends ProductDataSource {
     request.fields["description"] = newProduct.description;
     request.fields["price"] = newProduct.price.toString();
 
-    // print("Request URL: ${request.url}");
-    // print("Request Fields: ${request.fields}");
+    print("Request URL: ${request.url}");
+    print("Request Fields: ${request.fields}");
 
     final response = await request.send();
 
@@ -105,8 +106,8 @@ class ProductRemoteDataSource extends ProductDataSource {
       // print("Uploaded successfully");
       return ProductModel.fromJson(json.decode(responseBody));
     } else {
-      // print("Status Code: ${response.statusCode}");
-      // print("Response Body: $responseBody");
+      print("Status Code: ${response.statusCode}");
+      print("Response Body: $responseBody");
       throw ServerException();
     }
   }

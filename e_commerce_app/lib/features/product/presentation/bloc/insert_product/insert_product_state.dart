@@ -15,6 +15,6 @@ class InsertedProductFail extends InsertProductState {
 }
 
 class InsertedProductSuccess extends InsertProductState {
-  ProductEntity insertededProduct;
-  InsertedProductSuccess({required this.insertededProduct});
+  
+  InsertedProductSuccess();
 }

@@ -28,7 +28,7 @@ class ProductModel extends ProductEntity {
   Map<String, dynamic> toJson() => {
         "name": name,
         "description": description,
-        "price": price,
+        "price": price.toString(),
         "imageUrl": imageUrl,
       };
 

@@ -47,10 +47,12 @@ class ProductRepositoryImplimentation extends ProductRepository {
       ProductEntity newProduct) async {
     // // TODO: implement insertProduct
     // throw UnimplementedError();
+    print("hello");
 
     try {
+      var newm = newProduct.toModel();
       final result =
-          await productRemoteDataSource.updateProduct(newProduct.toModel());
+          await productRemoteDataSource.insertProduct(newm);
       return Right(result);
     } on ServerFailure {
       return Left(ServerFailure("Error while getting all produt"));
