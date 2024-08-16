@@ -1,6 +1,9 @@
 import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
+import 'package:e_commerce_app/features/product/presentation/bloc/update/update_product_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/view/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class DetailsPage extends StatelessWidget {
@@ -25,10 +28,27 @@ class DetailsPage extends StatelessWidget {
 
 void update() {
       Navigator.pushNamed(
-        context, "/update",
+        context, "/insertitem",
         arguments: product
         
         );
+        context
+          .read<UpdateProductBloc>()
+          .add(UpdateInitiated());
+    }
+void delete() {
+      
+        context
+          .read<UpdateProductBloc>()
+          .add(ProductDeleted(product: product));
+          Navigator.pushNamed(
+        context, "/home",
+        
+        
+        );
+         context
+          .read<HomeBloc>()
+          .add(HomeLoaded());
     }
    
 
@@ -189,7 +209,7 @@ void update() {
 
                         // }, child: Text("UPDATE"))
                         Expanded(
-                          child: DeleteButton(title: "DELETE"),
+                          child: DeleteButton(title: "DELETE",callback: delete,),
                         ),
                         SizedBox(
                           width: 50,

@@ -4,12 +4,11 @@ import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
 import 'package:e_commerce_app/features/product/domain/repositories/product_repository.dart';
 
 class UpdateProduct {
-  String id;
-  ProductEntity updatedProduct;
+  
   ProductRepository productRepository;
-  UpdateProduct(this.productRepository,this.updatedProduct, this.id);
+  UpdateProduct(this.productRepository);
 
-  Future<Either<Failure, void>> execute() {
-    return productRepository.updateProduct(id, updatedProduct);
+  Future<Either<Failure, void>> execute(ProductEntity updatedProduct) {
+    return productRepository.updateProduct(updatedProduct.id, updatedProduct);
   }
 }

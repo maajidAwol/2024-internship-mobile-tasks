@@ -1,6 +1,8 @@
 import 'package:e_commerce_app/features/product/domain/usecase/insert_product_usecase.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/insert_product/insert_product_bloc.dart';
+import 'package:e_commerce_app/features/product/presentation/bloc/search/search_product_bloc.dart';
+import 'package:e_commerce_app/features/product/presentation/bloc/update/update_product_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/view/details.dart';
 import 'package:e_commerce_app/features/product/presentation/view/home.dart';
 import 'package:e_commerce_app/features/product/presentation/view/insert_item.dart';
@@ -8,6 +10,8 @@ import 'package:e_commerce_app/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'features/product/presentation/view/search_product.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,12 @@ class Root extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<InsertProductBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<UpdateProductBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<SearchBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -48,7 +58,7 @@ class Root extends StatelessWidget {
           '/home': (context) => Home(),
           '/detail': (context) => DetailsPage(),
           '/insertitem': (context) => AddItem(),
-          '/searchpage': (context) => Text("ppp"),
+          '/searchpage': (context) => SearchPage(),
         },
       ),
     );

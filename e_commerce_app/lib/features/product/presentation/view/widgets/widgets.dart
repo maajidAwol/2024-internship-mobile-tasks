@@ -120,9 +120,10 @@ class BackgroundButton extends StatelessWidget {
 }
 
 class DeleteButton extends StatelessWidget {
-  DeleteButton({super.key, required this.title});
+  DeleteButton({super.key, required this.title, required this.callback});
   String title;
 
+final VoidCallback? callback;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -137,9 +138,9 @@ class DeleteButton extends StatelessWidget {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
         ),
-        onPressed: () {},
+        onPressed: callback,
         child: Text(
-          "DELETE",
+          title,
           style: TextStyle(
               color: Color.fromRGBO(190, 19, 19, 1),
               fontWeight: FontWeight.w600,

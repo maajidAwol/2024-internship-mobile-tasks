@@ -22,6 +22,7 @@ class ProductRepositoryImplimentation extends ProductRepository {
           result.map((prod) => prod.toEntity()).toList();
       return Right(resultList);
     } on ServerException {
+      print("failing");
       return Left(ServerFailure("message"));
     } on SocketException {
       return Left(ConnectionFailure("Failed to connect to internet"));
@@ -51,8 +52,7 @@ class ProductRepositoryImplimentation extends ProductRepository {
 
     try {
       var newm = newProduct.toModel();
-      final result =
-          await productRemoteDataSource.insertProduct(newm);
+      final result = await productRemoteDataSource.insertProduct(newm);
       return Right(result);
     } on ServerFailure {
       return Left(ServerFailure("Error while getting all produt"));

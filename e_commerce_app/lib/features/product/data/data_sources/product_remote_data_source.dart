@@ -79,7 +79,7 @@ class ProductRemoteDataSource extends ProductDataSource {
     } else {
       print("image found");
     }
-      print("image found");
+    print("image found");
 
     var request = http.MultipartRequest(
         'POST',
@@ -94,8 +94,7 @@ class ProductRemoteDataSource extends ProductDataSource {
     request.fields["description"] = newProduct.description;
     request.fields["price"] = newProduct.price.toString();
 
-    print("Request URL: ${request.url}");
-    print("Request Fields: ${request.fields}");
+    
 
     final response = await request.send();
 
@@ -106,21 +105,30 @@ class ProductRemoteDataSource extends ProductDataSource {
       // print("Uploaded successfully");
       return ProductModel.fromJson(json.decode(responseBody));
     } else {
-      print("Status Code: ${response.statusCode}");
-      print("Response Body: $responseBody");
+    
       throw ServerException();
     }
   }
 
   @override
   Future<ProductModel> updateProduct(ProductModel updatedProduct) async {
-    final response = await client.put(
-        Uri.parse(Urls.getProductById(updatedProduct.id)),
-        body: updatedProduct.toJson());
+    try {
+    
+      var cd = Urls.getProductById(updatedProduct.id);
+      
+      var ab = jsonEncode(updatedProduct.toJson());
+      
+   
+      final response = await client.put(Uri.parse(cd), body: ab, headers: {'Content-Type': 'application/json'});
+      
 
-    if (response.statusCode == 200) {
-      return ProductModel.fromJson(json.decode(response.body));
-    } else {
+      if (response.statusCode == 200) {
+        return ProductModel.fromJson(json.decode(response.body));
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+     
       throw ServerException();
     }
   }

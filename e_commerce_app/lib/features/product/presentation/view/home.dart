@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
+import 'package:e_commerce_app/features/product/presentation/bloc/search/search_product_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/view/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +62,10 @@ class Home extends StatelessWidget {
                   Spacer(),
                   OutlinedButton(
                     onPressed: () {},
-                    child: Icon(Icons.notifications_none,color: Colors.black,),
+                    child: Icon(
+                      Icons.notifications_none,
+                      color: Colors.black,
+                    ),
                     style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.all(1),
                         minimumSize: Size(40, 40),
@@ -92,22 +96,34 @@ class Home extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/searchpage');
+                        BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            List<ProductEntity> products = [];
+                            if (state is HomeSuccessLoading) {
+                              products = state.allProducts;
+                            }
+                            return OutlinedButton(
+                              onPressed: () {
+                                context
+                                    .read<SearchBloc>()
+                                    .add(SearOpened(allProducts: products));
+                                Navigator.pushNamed(context, '/searchpage');
+                              },
+                              child: Icon(
+                                Icons.search,
+                                color: Color.fromARGB(255, 217, 217, 217),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.all(2),
+                                  minimumSize: Size(40, 40),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(9)),
+                                  side: BorderSide(
+                                      color:
+                                          Color.fromARGB(255, 217, 217, 217)),
+                                  backgroundColor: Colors.white),
+                            );
                           },
-                          child: Icon(
-                            Icons.search,
-                            color: Color.fromARGB(255, 217, 217, 217),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                              padding: EdgeInsets.all(2),
-                              minimumSize: Size(40, 40),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(9)),
-                              side: BorderSide(
-                                  color: Color.fromARGB(255, 217, 217, 217)),
-                              backgroundColor: Colors.white),
                         ),
                       ],
                     ),
