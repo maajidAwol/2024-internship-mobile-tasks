@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/domain/entities/product.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/search/search_product_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/update/update_product_bloc.dart';
 import 'package:flutter/material.dart';

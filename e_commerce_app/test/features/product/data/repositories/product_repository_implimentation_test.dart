@@ -5,7 +5,7 @@ import 'package:e_commerce_app/core/failure/exception.dart';
 import 'package:e_commerce_app/core/failure/failure.dart';
 import 'package:e_commerce_app/features/product/data/models/product_model.dart';
 import 'package:e_commerce_app/features/product/data/repositories/product_repository_implimentation.dart';
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/domain/entities/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

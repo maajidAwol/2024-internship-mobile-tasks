@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/enteties/product.dart';
+import '../../../domain/entities/product.dart';
 
 part 'search_product_event.dart';
 part 'search_product_state.dart';

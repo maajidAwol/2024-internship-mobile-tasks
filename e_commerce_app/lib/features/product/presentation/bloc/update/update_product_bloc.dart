@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/core/failure/failure.dart';
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/domain/entities/product.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/delete_product_usecase.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/update_product_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

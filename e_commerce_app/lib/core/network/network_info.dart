@@ -13,8 +13,3 @@ class NetworkInfoImplimentation implements NetworkInfo {
       internetStatus == InternetStatus.connected;
 }
 
-// void main() {
-//   InternetStatus a = InternetStatus.connected;
-//   NetworkInfoImplimentation ac = NetworkInfoImplimentation(internetStatus: a);
-//   print(ac.isConnected);
-// }

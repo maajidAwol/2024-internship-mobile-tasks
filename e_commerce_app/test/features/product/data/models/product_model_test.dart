@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:e_commerce_app/features/product/data/models/product_model.dart';
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/domain/entities/product.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 

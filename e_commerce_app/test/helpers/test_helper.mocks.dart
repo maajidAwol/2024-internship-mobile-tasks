@@ -13,7 +13,7 @@ import 'package:e_commerce_app/features/product/data/data_sources/product_remote
     as _i9;
 import 'package:e_commerce_app/features/product/data/models/product_model.dart'
     as _i4;
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart'
+import 'package:e_commerce_app/features/product/domain/entities/product.dart'
     as _i8;
 import 'package:e_commerce_app/features/product/domain/repositories/product_repository.dart'
     as _i5;

@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/failure/exception.dart';
 import 'package:e_commerce_app/core/failure/failure.dart';
 import 'package:e_commerce_app/features/product/data/data_sources/product_remote_data_source.dart';
-import 'package:e_commerce_app/features/product/domain/enteties/product.dart';
+import 'package:e_commerce_app/features/product/domain/entities/product.dart';
 import 'package:e_commerce_app/features/product/domain/repositories/product_repository.dart';
 
 class ProductRepositoryImplimentation extends ProductRepository {

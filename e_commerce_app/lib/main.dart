@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/auth/presentation/view/splash.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/insert_product_usecase.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/insert_product/insert_product_bloc.dart';
@@ -50,8 +51,9 @@ class Root extends StatelessWidget {
             useMaterial3: true,
             appBarTheme: AppBarTheme(backgroundColor: Colors.white)),
 
-        home: Scaffold(
-          body: Home(),
+        home: const Scaffold(
+          // body: Home(),
+          body: Splash(),
         ),
         // initialRoute: '/home',
         routes: {
