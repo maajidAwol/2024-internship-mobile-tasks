@@ -19,6 +19,8 @@ class AuthRemoteDataSources {
     );
 
     String token = json.decode(response.body)['data']['access_token'];
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 201) {
       print(token);
       return token;
@@ -36,6 +38,8 @@ class AuthRemoteDataSources {
         'password': password,
       },
     );
+    print(response.body);
+    print(response.statusCode);
 
     if (response.statusCode == 201) {
       print(response.body);

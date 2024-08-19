@@ -23,7 +23,10 @@ class ItemCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.network(product.imageUrl,fit: BoxFit.fitWidth,),
+              child: Image.network(
+                product.imageUrl,
+                fit: BoxFit.fitWidth,
+              ),
             ),
             Container(
               color: Colors.white,
@@ -123,7 +126,7 @@ class DeleteButton extends StatelessWidget {
   DeleteButton({super.key, required this.title, required this.callback});
   String title;
 
-final VoidCallback? callback;
+  final VoidCallback? callback;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -207,6 +210,7 @@ class TextFieldTitle extends StatelessWidget {
       this.fontsize = 14,
       this.title = '',
       this.border = false,
+      this.pass = false,
       this.lines = 1,
       this.type = null,
       this.typecolor = Colors.black,
@@ -220,6 +224,7 @@ class TextFieldTitle extends StatelessWidget {
   String? hint;
   Color color;
   bool border;
+  bool pass;
   double fontsize;
   Color typecolor;
   TextEditingController controller;
@@ -254,6 +259,7 @@ class TextFieldTitle extends StatelessWidget {
               color: color,
             ),
             child: TextField(
+              obscureText: pass,
               maxLines: lines,
               controller: controller,
               decoration: InputDecoration(

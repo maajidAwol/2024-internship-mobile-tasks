@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
-
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/failure/failure.dart';
@@ -12,5 +10,5 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> signUp(
       {required String name,required String email, required String password});
 
-  Future<Either<Failure, Void>> signOut();
+  Future<Either<Failure, void>> signOut();
 }

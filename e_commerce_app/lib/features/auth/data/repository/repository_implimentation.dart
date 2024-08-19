@@ -1,4 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/failure/failure.dart';
@@ -29,7 +28,7 @@ class AuthRepositoryImplimentation extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Void>> signOut() {
+  Future<Either<Failure, void>> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }

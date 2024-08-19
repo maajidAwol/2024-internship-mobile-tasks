@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce_app/features/auth/presentation/view/splash.dart';
 import 'package:e_commerce_app/features/product/domain/usecase/insert_product_usecase.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'features/auth/presentation/view/login.dart';
+import 'features/auth/presentation/view/signup.dart';
 import 'features/product/presentation/view/search_product.dart';
 
 void main() async {
@@ -39,6 +42,9 @@ class Root extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<SearchBloc>(),
         ),
+        BlocProvider(
+          create: (context) => getIt<AuthBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'E-Commerce App',
@@ -61,6 +67,8 @@ class Root extends StatelessWidget {
           '/detail': (context) => DetailsPage(),
           '/insertitem': (context) => AddItem(),
           '/searchpage': (context) => SearchPage(),
+          '/signup': (context) => SignUpScreen(),
+          '/login': (context) => LoginScreen(),
         },
       ),
     );
