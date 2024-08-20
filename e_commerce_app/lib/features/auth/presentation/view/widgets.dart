@@ -68,30 +68,52 @@ class TextFieldTitle extends StatelessWidget {
             height: 10,
           ),
           Container(
+            alignment: Alignment.center,
             decoration: BoxDecoration(
           
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
-              color: Color.fromARGB(255,250, 250, 250),
+              color: Color.fromARGB(255,225, 225, 225),
             ),
-            child: TextField(
-              obscureText: pass,
-              
-              controller: controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
+            child: Center(
+              child: TextField(
+                obscureText: pass,
                 
-                hintText: hint,
-                hintStyle: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
+                controller: controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  
+                  hintText: hint,
+                  hintStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: EdgeInsets.only(left: 16, ),
                 ),
-                contentPadding: EdgeInsets.only(left: 16, top: 10),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+class GoBack extends StatelessWidget {
+  const GoBack({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: Icon(
+        Icons.arrow_back_ios,
+        size: 18,
+        color: Color.fromARGB(255, 63, 81, 243),
       ),
     );
   }

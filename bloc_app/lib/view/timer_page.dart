@@ -32,7 +32,8 @@ class TimerView extends StatelessWidget {
               ),
             )
           ],
-        )
+        ),
+        Actions()
       ]),
     );
   }
@@ -45,8 +46,8 @@ class TimerText extends StatelessWidget {
   Widget build(BuildContext context) {
     final duration = context.select((TimerBloc bloc) => bloc.state.duration);
     final minutesStr =
-        ((duration / 60) % 60).floor().toString().padLeft(2, '00');
-    final secondsStr = (duration % 60).floor.toString().padLeft(2, '0');
+        ((duration / 60) % 60).floor().toString().padLeft(2, '0');
+    final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
     return Text(
       '$minutesStr:$secondsStr',
       style: Theme.of(context).textTheme.headlineLarge,

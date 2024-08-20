@@ -12,26 +12,42 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-   void login(){
-                  context.read<AuthBloc>().add(LoginEvent(
-                      email: emailController.text,
-                      password: passwordController.text));
+    void login() {
+      context.read<AuthBloc>().add(LoginEvent(
+          email: emailController.text, password: passwordController.text));
 
-                  Navigator.pushNamed(context, '/home');
-                }
+      Navigator.pushNamed(context, '/home');
+    }
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(left: 25, right: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Container(
-              //   height: 50,
-              //   width: 50,
-              //   color: Colors.black,
-              // ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                height: 50,
+                width: 100,
+                // color: Colors.black,
+                child: Center(
+                  child: Text(
+                    "ECOM",
+                    style: TextStyle(fontSize: 25),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
 
               Text(
                 "Create your account",
@@ -45,12 +61,8 @@ class LoginScreen extends StatelessWidget {
               // TextField(
               //   controller: emailController,
               // ),
-              TextFieldTitle(
-                title: "Email",
-                controller: emailController),
-              TextFieldTitle(
-                title: "Password",
-                controller: emailController),
+              TextFieldTitle(title: "Email", controller: emailController),
+              TextFieldTitle(title: "Password", controller: emailController),
               // Text("Password"),
               // TextField(
               //   controller: passwordController,
@@ -66,7 +78,25 @@ class LoginScreen extends StatelessWidget {
               //   },
               //   child: Text("LOGIN"),
               // ),
-              BackgroundButton(title: "LOGIN",callback: login,)
+              SizedBox(height: 20),
+
+              BackgroundButton(
+                title: "LOGIN",
+                callback: login,
+              ),
+              SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? "),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: Text("Sign Up"),
+                  ),
+                ],
+              )
             ],
           ),
         ),
