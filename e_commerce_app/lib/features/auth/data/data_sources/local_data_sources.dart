@@ -8,8 +8,11 @@ class AuthLocalDataSource {
     await sharedPreferences.setString("user", Token);
   }
 
-  Future<String> getToken() async {
+   static Future<String> getToken() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+
     final userToken = sharedPreferences.getString("user");
+    print(userToken);
     if (userToken != null) {
       return userToken;
     } else {

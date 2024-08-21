@@ -13,14 +13,20 @@ class InsertProductBloc extends Bloc<ProductInsertedEvent, InsertProductState> {
   InsertProductBloc({required this.insertProductUsecase})
       : super(InsertProductInitial()) {
     on<ProductInserted>(_onInserted);
+    on<InsertInitial>(_onInsertInitial);
   }
 
   FutureOr<void> _onInserted(
       ProductInserted event, Emitter<InsertProductState> emit) async {
-    
     emit(InsertedProductLoading());
     final result = await insertProductUsecase.execute(event.product);
-   result.fold((failure) => emit(InsertedProductFail()),
+    result.fold((failure) => emit(InsertedProductFail()),
         (products) => emit(InsertedProductSuccess()));
+         emit(InsertProductInitial());
+  }
+
+  FutureOr<void> _onInsertInitial(
+      InsertInitial event, Emitter<InsertProductState> emit) {
+    emit(InsertProductInitial());
   }
 }

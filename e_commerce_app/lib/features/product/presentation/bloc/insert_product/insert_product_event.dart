@@ -8,3 +8,6 @@ class ProductInserted extends  ProductInsertedEvent {
   ProductEntity product;
   ProductInserted({required this.product});
 }
+class InsertInitial extends  ProductInsertedEvent {
+  InsertInitial();
+}

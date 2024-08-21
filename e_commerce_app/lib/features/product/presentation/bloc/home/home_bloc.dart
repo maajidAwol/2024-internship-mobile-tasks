@@ -16,7 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   FutureOr<void> _onLoaded(HomeLoaded event, Emitter<HomeState> emit) async {
-    // emit(HomeProductLoading());
+    emit(HomeProductLoading());
 
     final result = await getAllProductUsecase.execute();
 

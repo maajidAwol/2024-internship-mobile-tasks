@@ -5,6 +5,7 @@ import 'package:e_commerce_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:e_commerce_app/features/auth/presentation/view/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -20,7 +21,6 @@ class SignUpScreen extends StatelessWidget {
           name: nameController.text,
           email: emailController.text,
           password: passwordController.text));
-      Navigator.pushNamed(context, '/login');
     }
 
     return Scaffold(
@@ -31,125 +31,138 @@ class SignUpScreen extends StatelessWidget {
         actions: [
           Container(
             // padding: EdgeInsets.all(0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                height: 30,
-                width: 75,
-                // color: Colors.black,
-                child: Center(
+            decoration: BoxDecoration(
+              boxShadow: [
+              
+                         BoxShadow(
+          color: Color.fromRGBO(0, 0, 0, 0.25),
+          blurRadius: 200,
+          offset: Offset(4, 4), 
+          spreadRadius: 0,
+        ),      
+                 
+              ],
+              border: Border.all(
+                color: Color.fromRGBO(63, 81, 243, 1),
+                
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(9)),
+            ),
+            height: 25,
+            width: 60,
+            // color: Colors.black,
+            
+                child: FittedBox(
+                  fit: BoxFit.cover,
+
+                child: Padding(
+                  padding: EdgeInsets.all(5),
                   child: Text(
                     "ECOM",
-                    style: TextStyle(fontSize: 15),
+                    style: GoogleFonts.caveatBrush(
+                      color: Color.fromRGBO(63, 81, 243, 1),
+                      fontSize: 23,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(width: 10,)
+            
+            
+          ),
+          SizedBox(
+            width: 35,
+          )
         ],
-
       ),
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(left: 25, right: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Container(
-              //   height: 50,
-              //   width: 50,
-              //   color: Colors.black,
-              // ),
-
               Text(
                 "Create your account",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 26
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
 
-              // Text("Name"),
-              // TextField(
-              //   controller: nameController,
-              // ),
               TextFieldTitle(
                 title: "Name",
                 controller: nameController,
-                hint: "joen",
+                hint: "ex: jon smith",
               ),
-              // Text("Email"),
-              // TextField(
-              //   controller: emailController,
-              // ),,
               TextFieldTitle(
                 controller: emailController,
                 title: "Email",
+                hint: "ex: jon.smith@email.com",
               ),
-              // Text("Password"),
-              // TextField(
-              //   controller: passwordController,
-              // ),
 
               TextFieldTitle(
                 controller: passwordController,
                 pass: true,
                 title: "Password",
+                hint: "********",
               ),
               TextFieldTitle(
                 controller: confirmPassController,
                 pass: true,
                 title: "Confirm Password",
+                hint: "********",
               ),
-              // Text("Confirm Password"),
-              // TextField(
-              //   controller: passwordController,
-              // ),
 
-              // ElevatedButton(
-              //   onPressed: () {
-              //     context.read<AuthBloc>().add(SignUpEvent(
-              //         name: nameController.text,
-              //         email: emailController.text,
-              //         password: passwordController.text));
-              //     Navigator.pushNamed(context, '/login');
-              //   },
-              //   child: Text("SIGN UP"),
-              // ),
               SizedBox(
                 height: 25,
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Checkbox(value: false, onChanged: null)
-                  ,
-                  Text("I understand the  "),
+                  Checkbox(
+                    
+                    value: false, onChanged: null),
+                  Text("I understand the  ",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    
+                  ),
+                  ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
-                    child: Text("terms & policy"),
+                    child: Text("terms & policy", style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromRGBO(63, 81, 243, 1)
+
+                    
+                  ),),
                   ),
                 ],
               ),
-              BlocBuilder<AuthBloc, AuthState>(
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is SignUpSuccess) {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }
+                },
                 builder: (context, state) {
                   if (state is AuthInitial) {
                     return BackgroundButton(title: "SIGN UP", callback: signup);
                   } else if (state is SignUpLoading) {
-                    return CircularProgressIndicator();
-                  } else if (state is SignUpSuccess) {
-                    Navigator.pushNamed(context, '/login');
-                    return Container();
+                    return Center(child: CircularProgressIndicator());
                   } else {
                     return Column(
                       children: [
-                        Text("failed to signup"),
+                        Text(
+                          "failed to signup,try again",
+                          style: TextStyle(color: Colors.red),
+                        ),
                         BackgroundButton(title: "SIGN UP", callback: signup)
                       ],
                     );
@@ -171,15 +184,24 @@ class SignUpScreen extends StatelessWidget {
               // )
 
               // ,
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("You have an account? "),
+                  Text("You have an account? ",  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: Color.fromRGBO(136, 136, 136, 1),),),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
-                    child: Text("LOGIN"),
+                    child: Text("LOGIN",
+                    
+                    style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: Color.fromRGBO(63, 81, 243, 1))
+                    ),
                   ),
                 ],
               )

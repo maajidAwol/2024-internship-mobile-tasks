@@ -7,6 +7,7 @@ import 'package:e_commerce_app/features/product/domain/usecase/insert_product_us
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/failure/exception.dart';
 import 'dart:io';
@@ -49,8 +50,13 @@ class ProductRemoteDataSource extends ProductDataSource {
 
   @override
   Future<List<ProductModel>> getAllProduct() async {
-    final response = await client.get(Uri.parse(Urls.baseUrl));
-
+    var accessToken = await getToken();
+    final response = await client.get(Uri.parse(Urls.baseUrl), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    });
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       return ProductModel.fromJsonList(json.decode(response.body)["data"]);
     } else {
@@ -60,7 +66,12 @@ class ProductRemoteDataSource extends ProductDataSource {
 
   @override
   Future<ProductModel> getOneProduct(String id) async {
-    final response = await client.get(Uri.parse(Urls.getProductById(id)));
+    var accessToken = await getToken();
+    final response =
+        await client.get(Uri.parse(Urls.getProductById(id)), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    });
 
     if (response.statusCode == 200) {
       return ProductModel.fromJson(json.decode(response.body)["data"]);
@@ -71,6 +82,7 @@ class ProductRemoteDataSource extends ProductDataSource {
 
   @override
   Future<ProductModel> insertProduct(ProductModel newProduct) async {
+    var accessToken = await getToken();
     File image = File(newProduct.imageUrl);
 
     if (!image.existsSync()) {
@@ -93,34 +105,35 @@ class ProductRemoteDataSource extends ProductDataSource {
     request.fields["name"] = newProduct.name;
     request.fields["description"] = newProduct.description;
     request.fields["price"] = newProduct.price.toString();
-
-    
-
+    request.headers.addAll({
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $accessToken',
+    });
     final response = await request.send();
 
     final responseBody = await response.stream.bytesToString();
-// print("Response Body: $responseBody");
+print("Response Body: $responseBody");
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       // print("Uploaded successfully");
       return ProductModel.fromJson(json.decode(responseBody));
     } else {
-    
       throw ServerException();
     }
   }
 
   @override
   Future<ProductModel> updateProduct(ProductModel updatedProduct) async {
+    var accessToken = await getToken();
     try {
-    
       var cd = Urls.getProductById(updatedProduct.id);
-      
+
       var ab = jsonEncode(updatedProduct.toJson());
-      
-   
-      final response = await client.put(Uri.parse(cd), body: ab, headers: {'Content-Type': 'application/json'});
-      
+
+      final response = await client.put(Uri.parse(cd), body: ab, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      });
 
       if (response.statusCode == 200) {
         return ProductModel.fromJson(json.decode(response.body));
@@ -128,19 +141,35 @@ class ProductRemoteDataSource extends ProductDataSource {
         throw ServerException();
       }
     } catch (e) {
-     
       throw ServerException();
     }
   }
 
   @override
   Future<String> deleteProduct(String id) async {
-    final response = await client.delete(Uri.parse(Urls.getProductById(id)));
+    var accessToken = await getToken();
+    final response =
+        await client.delete(Uri.parse(Urls.getProductById(id)), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    });
 
     if (response.statusCode == 200) {
       return "deleted";
     } else {
       throw ServerException();
+    }
+  }
+
+  static Future<String> getToken() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+
+    final userToken = sharedPreferences.getString("user");
+    print(userToken);
+    if (userToken != null) {
+      return userToken;
+    } else {
+      throw Exception("no user have logged in");
     }
   }
 }

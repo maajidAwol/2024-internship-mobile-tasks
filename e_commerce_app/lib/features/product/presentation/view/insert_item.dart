@@ -57,7 +57,7 @@ class _AddItemState extends State<AddItem> {
           .read<HomeBloc>()
           .add(HomeLoaded());
 
-      Navigator.pushNamed(context, '/home');
+      
     }
 
     void updateProduct(ProductEntity product) {
@@ -74,7 +74,7 @@ class _AddItemState extends State<AddItem> {
             context
           .read<HomeBloc>()
           .add(HomeLoaded());
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home');
     }
 
     return Scaffold(
@@ -89,7 +89,9 @@ class _AddItemState extends State<AddItem> {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
-      body: BlocBuilder<InsertProductBloc, InsertProductState>(
+    
+      
+      body: BlocConsumer<InsertProductBloc, InsertProductState>(
         builder: (context, insertstate) {
           return BlocBuilder<UpdateProductBloc, UpdateProductState>(
               builder: (context, updatestate) {
@@ -219,7 +221,7 @@ class _AddItemState extends State<AddItem> {
                 ),
               );
             } else if (insertstate is InsertedProductLoading) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             } else if (insertstate is InsertedProductFail) {
               return Text("failed");
             } else if (insertstate is InsertedProductSuccess) {
@@ -228,7 +230,11 @@ class _AddItemState extends State<AddItem> {
               return Text("failed");
             }
           });
-        },
+        }, listener: (BuildContext context, InsertProductState state) { 
+          if(state is InsertedProductSuccess){
+Navigator.pushReplacementNamed(context, '/home');
+          }
+         },
       ),
     );
   }

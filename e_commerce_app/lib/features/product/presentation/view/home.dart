@@ -131,15 +131,16 @@ class Home extends StatelessWidget {
                       height: 15,
                     ),
                     //cardsl
-                    Expanded(
-                        // child: ListView.builder(
-                        //   itemCount: 10,
-                        //   itemBuilder: (BuildContext context, int index) {
-                        //     return ItemCard();
-                        //   },
-                        // ),
+                    // Expanded(
+                    //     // child: ListView.builder(
+                    //     //   itemCount: 10,
+                    //     //   itemBuilder: (BuildContext context, int index) {
+                    //     //     return ItemCard();
+                    //     //   },
+                    //     // ),
 
-                        child: BlocBuilder<HomeBloc, HomeState>(
+                    //     child: 
+                        BlocBuilder<HomeBloc, HomeState>(
                             builder: (context, state) {
                       if (state is HomeSuccessLoading) {
                         List<ProductEntity> products = state.allProducts;
@@ -147,11 +148,13 @@ class Home extends StatelessWidget {
                         List<Widget> allCards = products.map((Product) {
                           return ItemCard(product: Product);
                         }).toList();
-                        return ListView(
-                          children: allCards,
+                        return Expanded(
+                          child: ListView(
+                            children: allCards,
+                          ),
                         );
                       } else if (state is HomeProductLoading) {
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       } else {
                         return Text("error ");
                       }
@@ -159,7 +162,7 @@ class Home extends StatelessWidget {
                         //  ListView(
                         //   children: allCards,
                         // )
-                        )
+                        // )
                   ],
                 ),
               )

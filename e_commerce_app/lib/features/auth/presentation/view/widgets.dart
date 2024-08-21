@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 class BackgroundButton extends StatelessWidget {
   BackgroundButton({required this.title, super.key, this.callback});
   String title;
@@ -10,6 +11,7 @@ class BackgroundButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.blue),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -52,29 +54,33 @@ class TextFieldTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+     
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 10,),
           title != ''
               ? Text(
                   title,
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
+                    color: Color.fromRGBO(111, 111, 111, 1),
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+                    fontWeight: FontWeight.w400
+                  )
                 )
               : Container(),
           SizedBox(
             height: 10,
           ),
           Container(
+            
             alignment: Alignment.center,
             decoration: BoxDecoration(
           
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
-              color: Color.fromARGB(255,225, 225, 225),
+              color: Color.fromRGBO(245, 245, 245, 1),
             ),
             child: Center(
               child: TextField(
@@ -85,9 +91,10 @@ class TextFieldTitle extends StatelessWidget {
                   border: InputBorder.none,
                   
                   hintText: hint,
-                  hintStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+                  hintStyle: GoogleFonts.poppins(
+                    color: Color.fromRGBO(136, 136, 136, 1),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400
                   ),
                   contentPadding: EdgeInsets.only(left: 16, ),
                 ),

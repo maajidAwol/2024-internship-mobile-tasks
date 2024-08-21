@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
+    emit(LoginLoading());
     final result =
         await login.execute(email: event.email, password: event.password);
     print(result);

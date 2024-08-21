@@ -17,11 +17,13 @@ import 'package:e_commerce_app/features/product/presentation/bloc/home/home_bloc
 import 'package:e_commerce_app/features/product/presentation/bloc/insert_product/insert_product_bloc.dart';
 import 'package:e_commerce_app/features/product/presentation/bloc/update/update_product_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import 'features/auth/data/data_sources/local_data_sources.dart';
+import 'features/product/data/data_sources/product_local_data_source.dart';
 import 'features/product/presentation/bloc/search/search_product_bloc.dart';
 
 GetIt getIt = GetIt.instance;
@@ -30,14 +32,17 @@ Future<void> setup() async {
   // var sharedPreferance = await SharedPreferences.getInstance();
   var httpClient = http.Client();
   var sharedPreferences = await SharedPreferences.getInstance();
-
+  var networkInfo = InternetConnectionChecker();
   // var internetStatus = InternetStatus.connected;
-  // getIt.registerFactory<NetworkInfoImplimentation>(
-  //     () => NetworkInfoImplimentation(internetStatus: internetStatus));
+  getIt.registerFactory<NetworkInfo>(
+      () => NetworkInfoImplimentation(internetStatus: networkInfo));
   getIt.registerSingleton<ProductRemoteDataSource>(
       ProductRemoteDataSource(client: httpClient));
+  getIt.registerSingleton<ProductLocalDatasource>(
+      ProductLocalDataSourceImpl(sharedPreferences: sharedPreferences));
+      
   getIt.registerSingleton<ProductRepository>(
-    ProductRepositoryImplimentation(productRemoteDataSource: getIt()),
+    ProductRepositoryImplimentation(productRemoteDataSource: getIt(), networkInfo: getIt(), productLocalDataSource: getIt()),
   );
   getIt.registerSingleton<GetAllProductUsecase>(GetAllProductUsecase(getIt()));
   getIt.registerSingleton<InsertProduct>(InsertProduct(getIt()));
@@ -59,7 +64,7 @@ Future<void> setup() async {
       AuthLocalDataSource(sharedPreferences: sharedPreferences));
   getIt.registerSingleton<AuthRepository>(
     AuthRepositoryImplimentation(
-        authLocalDataSource: getIt(), authRemoteDataSources: getIt()),
+        authLocalDataSource: getIt(), authRemoteDataSources: getIt(),networkInfo: getIt()),
   );
 
   getIt.registerSingleton<Login>(Login(getIt()));
